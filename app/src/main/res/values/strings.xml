@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">MyMovieApp</string>
+    <string name="what_looking_for">What are you looking for?</string>
 </resources>
