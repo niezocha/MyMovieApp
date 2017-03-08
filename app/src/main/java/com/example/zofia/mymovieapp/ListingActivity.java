@@ -47,13 +47,12 @@ public class ListingActivity extends NucleusAppCompatActivity <ListingPresenter>
 
     public void setDataOnUiThread(SearchResult result, boolean noInternet) {
         runOnUiThread(() -> {
-            com.annimon.stream.Stream.of(result.getItems()).forEach(movieListingItem -> {
                 if(noInternet){
                     viewFlipper.setDisplayedChild(viewFlipper.indexOfChild(noInternetImage));
                 }else{
                     viewFlipper.setDisplayedChild(viewFlipper.indexOfChild(recyclerView));
-                    adapter.setItems(result.getItems());                }
-            });
+                    adapter.setItems(result.getItems());
+                }
         });
     }
 }
