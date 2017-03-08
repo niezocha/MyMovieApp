@@ -25,10 +25,9 @@ public class ListingPresenter extends Presenter<ListingActivity>{
 
                     SearchResult searchResult = new Gson().fromJson(result, SearchResult.class);
 
-                    getView().setDataOnUiThread(searchResult);
+                    getView().setDataOnUiThread(searchResult, false);
                 } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                    getView().setDataOnUiThread(null, true);                }
             }
         }.start();
     }
@@ -38,6 +37,7 @@ public class ListingPresenter extends Presenter<ListingActivity>{
         String stringUrl = "http://www.omdbapi.com/?s="+title;
         URL url = new URL(stringUrl);
         HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+        urlConnection.setConnectTimeout(3000);
         InputStream inputStream = urlConnection.getInputStream();
 
         return convertStreamToString(inputStream);
