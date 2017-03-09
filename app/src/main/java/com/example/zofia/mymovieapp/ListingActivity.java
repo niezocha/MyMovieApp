@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
@@ -23,6 +25,9 @@ import static io.reactivex.schedulers.Schedulers.io;
 public class ListingActivity extends NucleusAppCompatActivity<ListingPresenter> {
 
     private static final String SEARCH_TITLE = "search_title";
+    private static final String SEARCH_YEAR = "search_year";
+    private static final String SEARCH_TYPE = "search_type";
+    public static final int NO_YEAR_SELECTED = 0;
     private MovieListAdapter adapter;
 
     @BindView(R.id.view_flipper)
@@ -34,6 +39,9 @@ public class ListingActivity extends NucleusAppCompatActivity<ListingPresenter> 
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
 
+    @BindView(R.id.no_reslts)
+    LinearLayout noResults;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,10 +49,13 @@ public class ListingActivity extends NucleusAppCompatActivity<ListingPresenter> 
         ButterKnife.bind(this);
 
         String title = getIntent().getStringExtra(SEARCH_TITLE);
+        int year = getIntent().getIntExtra(SEARCH_YEAR, NO_YEAR_SELECTED);
+        String type = getIntent().getStringExtra(SEARCH_TYPE);
+
         adapter = new MovieListAdapter();
         recyclerView.setAdapter(adapter);
 
-        getPresenter().getDataAsync(title)
+        getPresenter().getDataAsync(title, year, type)
                 .subscribeOn(io())
                 .observeOn(mainThread())
                 .subscribe(this::succes, this::error);
@@ -61,13 +72,19 @@ public class ListingActivity extends NucleusAppCompatActivity<ListingPresenter> 
     }
 
     private void succes(SearchResult searchResult) {
-        viewFlipper.setDisplayedChild(viewFlipper.indexOfChild(recyclerView));
-        adapter.setItems(searchResult.getItems());
+        if("False".equalsIgnoreCase(searchResult.getResponse())){
+            viewFlipper.setDisplayedChild(viewFlipper.indexOfChild(noResults));
+        }else {
+            viewFlipper.setDisplayedChild(viewFlipper.indexOfChild(recyclerView));
+            adapter.setItems(searchResult.getItems());
+        }
     }
 
-    public static Intent createIntent(Context context, String title) {
+    public static Intent createIntent(Context context, String title, int year, String type) {
         Intent intent = new Intent(context, ListingActivity.class);
         intent.putExtra(SEARCH_TITLE, title);
+        intent.putExtra(SEARCH_YEAR, year);
+        intent.putExtra(SEARCH_TYPE, type);
         return intent;
     }
 }

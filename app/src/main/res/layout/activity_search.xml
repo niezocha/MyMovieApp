@@ -30,5 +30,70 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
+    <CheckBox
+        android:id="@+id/year_chechbox"
+        android:text="Rok:"
+        android:layout_margin="20dp"
+        android:layout_below="@+id/search_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <CheckBox
+        android:id="@+id/type_chechbox"
+        android:text="Typ:"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/year_chechbox"
+        android:layout_alignBottom="@+id/year_chechbox"
+        android:layout_toLeftOf="@+id/search_button"
+        android:layout_toStartOf="@+id/search_button"
+        android:layout_marginRight="51dp"
+        android:layout_marginEnd="51dp" />
+
+    <RadioGroup
+        android:id="@+id/radio_type"
+        android:layout_margin="20dp"
+        android:visibility="invisible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/year_chechbox"
+        android:layout_alignLeft="@+id/type_chechbox"
+        android:layout_alignStart="@+id/type_chechbox">
+
+        <RadioButton
+        android:id="@+id/radio_movie"
+        android:text="movie"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+        <RadioButton
+            android:id="@+id/radio_series"
+            android:text="series"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <RadioButton
+            android:id="@+id/radio_episode"
+            android:text="episode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <RadioButton
+            android:id="@+id/radio_game"
+            android:text="game"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </RadioGroup>
+
+    <NumberPicker
+        android:id="@+id/number_picker"
+        android:visibility="invisible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/year_chechbox"
+        android:layout_alignLeft="@+id/year_chechbox"
+        android:layout_alignStart="@+id/year_chechbox" />
+
 </RelativeLayout>
 

@@ -27,12 +27,12 @@ public class ListingPresenter extends Presenter<ListingActivity>{
                 .build();
     }
 
-    public Observable<SearchResult> getDataAsync(String title){
+    public Observable<SearchResult> getDataAsync(String title, int year, String type){
 
-        return retrofit.create(SearchService.class).search(title);
+        String steringYear = year == ListingActivity.NO_YEAR_SELECTED ? null : String.valueOf(year);
+        return retrofit.create(SearchService.class).search(title, steringYear, type);
 
-//
-//
+
 //        new Thread(){
 //            @Override
 //            public void run(){
